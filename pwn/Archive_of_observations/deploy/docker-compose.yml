@@ -1,0 +1,72 @@
+name: archive_of_observations
+
+services:
+  observation_init:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: init
+    environment:
+      FLAG: '${FLAG:?Set FLAG for the challenge instance}'
+    volumes:
+      - formatter-secret:/formatter-secret
+      - web-secret:/web-secret
+      - runtime:/run/argus
+    restart: 'no'
+    mem_limit: 128m
+    cpus: 0.5
+
+  observation_formatter:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: formatter
+    depends_on:
+      observation_init:
+        condition: service_completed_successfully
+    volumes:
+      - formatter-secret:/formatter-secret:ro
+      - runtime:/run/argus
+    read_only: true
+    tmpfs: /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    network_mode: none
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.5
+
+  observation_web:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: web
+    depends_on:
+      observation_init:
+        condition: service_completed_successfully
+      observation_formatter:
+        condition: service_started
+    environment:
+      PWN_CAPTCHA: '${PWN_CAPTCHA:-1}'
+      PWN_CAPTCHA_TEST_TOKEN: '${PWN_CAPTCHA_TEST_TOKEN:-}'
+    ports:
+      - '0.0.0.0:18110:8080'
+    volumes:
+      - web-secret:/web-secret:ro
+      - runtime:/run/argus:ro
+    read_only: true
+    tmpfs: /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.5
+
+volumes:
+  formatter-secret:
+  web-secret:
+  runtime:

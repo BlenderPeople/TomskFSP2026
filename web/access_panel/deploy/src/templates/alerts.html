@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page">
+    <div class="crt-header">
+        <div class="crt-title">&gt; СИСТЕМНЫЕ ОПОВЕЩЕНИЯ<span class="cursor">_</span></div>
+        <div class="crt-subtitle">внутренние уведомления · архивный режим</div>
+    </div>
+
+    <div class="grid">
+        <section class="card card-wide">
+            <h2>Лента оповещений</h2>
+            <div class="alert-list">
+                <div class="alert-item">
+                    <div class="alert-date">13.11.2018</div>
+                    <h3>Обновление журнала</h3>
+                    <p>В журнал выдачи карт добавлена сортировка по клику на заголовок колонки.
+                    Постраничная выгрузка отключена.</p>
+                </div>
+                <div class="alert-item">
+                    <div class="alert-date">02.11.2018</div>
+                    <h3>Резервный идентификатор</h3>
+                    <p>Идентификатор 000 зарегистрирован как резервный и не входит
+                    в общий список активных карт.</p>
+                </div>
+                <div class="alert-item alert-note">
+                    <div class="alert-date">28.10.2018</div>
+                    <h3>Проверка парольной политики</h3>
+                    <p>Обновление параметров учётных записей отложено.
+                    Учётная запись оператора сохраняет текущие параметры.</p>
+                </div>
+                <div class="alert-item">
+                    <div class="alert-date">14.10.2018</div>
+                    <h3>Проверка журнала</h3>
+                    <p>Автоматическая проверка записей завершена.
+                    Замечаний нет.</p>
+                </div>
+                <div class="alert-item alert-note">
+                    <div class="alert-date">02.08.2018</div>
+                    <h3>Экспорт протокола</h3>
+                    <p>Для учётной записи оператора включён пункт «Экспорт протокола» —
+                    выгрузка файлов из каталога служебных журналов.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

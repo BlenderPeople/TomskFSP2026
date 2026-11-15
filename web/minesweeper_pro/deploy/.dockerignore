@@ -1,0 +1,6 @@
+solve/
+to_give/
+__pycache__/
+*.pyc
+README.md
+gen.py
